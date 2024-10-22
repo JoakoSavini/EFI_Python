@@ -54,7 +54,7 @@ class Rol(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
     
-class tipo_membresia(db.Model):
+class Tipo_membresia(db.Model):
     __tablename__ = 'tipos_membresia'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -183,7 +183,7 @@ class Descuento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tipo = db.Column(db.Float)
     
-class promocion(db.Model):
+class Promocion(db.Model):
     __tablename__ = 'promociones'
     
     id = db.Column(db.Integer, primary_key=True)
