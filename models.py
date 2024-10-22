@@ -13,6 +13,7 @@ class Persona(db.Model):
     fecha_registro = db.Column(db.DateTime, default=datetime.utcnow)
     tipo_persona = db.Column(db.String(50))
     
+    id_localidad = db.Column(db.Integer, db.ForeignKey('localidades.id')) 
     id_genero = db.Column(db.Integer, db.ForeignKey('generos.id'))
     id_est_civil = db.Column(db.Integer, db.ForeignKey('estados_civil.id'))
     
@@ -74,7 +75,7 @@ class Membresia(db.Model):
     
     id_tipo_membresia = db.Column(db.Integer, db.ForeignKey('tipos_membresia.id'))
     
-class genero(db.Model):
+class Genero(db.Model):
     __tablename__ = 'generos'
     
     id = db.Column(db.Integer, primary_key=True)
