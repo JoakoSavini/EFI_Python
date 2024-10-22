@@ -1,3 +1,3 @@
 ent/
-ent
-/ent
+.env
+__pycache__/
