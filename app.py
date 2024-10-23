@@ -21,3 +21,6 @@ ma = Marshmallow(app)
 
 #Importar los modelos del model.py
 from models import Usuario
+
+from views import register_bp
+register_bp(app)
