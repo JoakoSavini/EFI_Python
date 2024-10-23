@@ -22,6 +22,17 @@ class Persona(db.Model):
         'polymorphic_identity': 'persona'  # Identificador para la clase base
     }
     
+class Usuario(Persona):
+    __tablename__ = 'usuarios'
+    
+    id = db.Column(db.Integer, db.ForeignKey('personas.id'), primary_key=True)
+    username = db.Column(db.String(50))
+    id_admin = db.Column(db.Boolean)
+    
+    __mapper_args__ = {
+        'polymorphic_identity': 'usuario',
+    }
+
 class Empleado(Persona):
     __tablename__ = 'empleados'
     id = db.Column(db.Integer, db.ForeignKey('personas.id'), primary_key=True)
