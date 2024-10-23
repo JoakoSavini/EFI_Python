@@ -1,6 +1,14 @@
 from app import db
 from datetime import datetime
 
+class Usuario(db.Model):
+    __tablename__ = 'usuarios'
+    
+    id = db.Column(db.Integer,  primary_key=True)
+    username = db.Column(db.String(50), nullable=False)
+    password_hash = db.Column(db.String(300), nullable=False)
+    id_admin = db.Column(db.Boolean)
+
 class Persona(db.Model):
     __tablename__ = 'personas'
     id = db.Column(db.Integer, primary_key=True)
@@ -15,22 +23,11 @@ class Persona(db.Model):
     
     id_localidad = db.Column(db.Integer, db.ForeignKey('localidades.id')) 
     id_genero = db.Column(db.Integer, db.ForeignKey('generos.id'))
-    id_est_civil = db.Column(db.Integer, db.ForeignKey('estados_civil.id'))
+    id_est_civil = db.Column(db.Integer, db.ForeignKey('estado_civil.id'))
     
     __mapper_args__ = {
         'polymorphic_on': tipo_persona,  # Columna que determina el tipo
         'polymorphic_identity': 'persona'  # Identificador para la clase base
-    }
-    
-class Usuario(Persona):
-    __tablename__ = 'usuarios'
-    
-    id = db.Column(db.Integer, db.ForeignKey('personas.id'), primary_key=True)
-    username = db.Column(db.String(50))
-    id_admin = db.Column(db.Boolean)
-    
-    __mapper_args__ = {
-        'polymorphic_identity': 'usuario',
     }
 
 class Empleado(Persona):
@@ -93,9 +90,9 @@ class Genero(db.Model):
     nombre = db.Column(db.String(50))
     
 class Estado_civil(db.Model):
-    __tablename__ = 'estados_civil'
+    __tablename__ = 'estado_civil'
     
-    id = db.Column(db.Integer, primaryKey=True)
+    id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
     
 class Producto(db.Model):
@@ -205,7 +202,7 @@ class Promocion(db.Model):
     fecha_inicio = db.Column(db.DateTime, default=datetime.utcnow)
     fecha_fin = db.Column(db.DateTime)
     
-    id_tipo_membresia = db.Column(db.Integer, db.ForeignKey('tipost_membresia.id'))
+    id_tipo_membresia = db.Column(db.Integer, db.ForeignKey('tipos_membresia.id'))
     
 class Evaluacion_fisica(db.Model):
     __tablename__ = 'evaluaciones_fisicas'
@@ -257,7 +254,7 @@ class Detalle_compra(db.Model):
     id_compra = db.Column(db.Integer, db.ForeignKey('compras.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id'))
     cantidad = db.Column(db.Integer)
-    precio_unitario = db.Column(db.float)
+    precio_unitario = db.Column(db.Float)
     
 class Proveedor(Persona):
     __tablename__ =  'proveedores'
@@ -269,14 +266,14 @@ class Proveedor(Persona):
     correo = db.Column(db.String(50))
     estado = db.Column(db.Boolean, default=True)
     
-    id_cond_fiscal = db.Column(db.Integer, db.ForeignKey('condiciones_fiscal.id'))
+    id_cond_fiscal = db.Column(db.Integer, db.ForeignKey('condicion_fiscal.id'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'proveedor',
     }
     
 class Condicion_fiscal(db.Model):
-    __tablename__ = 'condiciones_fiscal'
+    __tablename__ = 'condicion_fiscal'
     
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
@@ -312,3 +309,9 @@ class Tipo_factura(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(10))
+    
+class Turnos(db.Model):
+    __tablename__ = 'turnos'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    descripcion = db.Column(db.String(100))
